@@ -3,7 +3,7 @@ module main_tb;
 localparam T=20, sec = 1000000;
 
 reg clk;
-reg reset;
+reg t_reset;
 reg [1:0]mode_in;
 reg t_hooked;
 reg t_unhooked;
@@ -12,9 +12,10 @@ reg t_write_mode;
 wire [6:0]t_out_mode;
 wire [6:0]t_out1_act;
 wire [6:0]t_out2_act;
+wire [6:0]t_out_height; 
 
-main test(.clk(clk) ,.reset(reset) ,.out_mode(t_out_mode) ,.mode_in(mode_in), .out1_action(t_out1_act), 
-  .out2_action(t_out2_act), .hooked(t_hooked), .unhooked(t_unhooked), .write_mode(t_write_mode));
+main test(.clk(clk) ,.reset(t_reset) ,.out_mode(t_out_mode) ,.mode_in(mode_in), .out1_action(t_out1_act), 
+  .out2_action(t_out2_act), .hooked(t_hooked), .unhooked(t_unhooked), .write_mode(t_write_mode), .out_height(t_out_height));
 
 
 always begin
@@ -27,7 +28,7 @@ end
 initial begin
   mode_in = 2'd1;
 
-  reset = 1'b0;
+  t_reset = 1'b0;
   t_hooked = 1'b0;
   t_unhooked = 1'b0;
   t_write_mode = 1'b0;
@@ -37,8 +38,7 @@ initial begin
   t_write_mode = 1'b1;
   #(sec*2);
   t_write_mode = 1'b0;
-  #(sec*5);
-
+  #(sec*12);
 
   t_hooked = 1'b1;
   #(sec*2);
@@ -48,7 +48,13 @@ initial begin
   t_unhooked = 1'b1;
   #(sec*2);
   t_unhooked = 1'b0;
-  #(sec*5);
+  #(sec*20);
 
+  /*t_reset = 1'b1;
+  #(sec*2);
+  t_reset = 1'b0;
+  #(sec*5);*/
+
+$stop;
 end
 endmodule

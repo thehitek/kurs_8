@@ -11,18 +11,20 @@ reg [6:0]code2;
 assign seg1_action=code1;
 assign seg2_action=code2;
 
+//gfedcba
+
 always @*
 begin
 case(data)
   dn:
   begin
     code1 = 7'b0100001;
-    code2 = 7'b1101011;
+    code2 = 7'b0101011;
   end
   A1:
   begin
     code1 = 7'b0001000; 
-    code2 = 7'b1111001; 
+    code2 = 7'b1111001;
   end
   up: 
   begin

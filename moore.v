@@ -1,17 +1,17 @@
 module moore
-#(parameter up_to = 3'd3, down_to = 3'd1, start_height = 3'd2, turn_time = 3'd3, 
+#(parameter down_to = 3'd0, up_to = 3'd4, start_height = 3'd6, turn_time = 3'd3, 
 dn = 3'b000, A1 = 3'b001, up = 3'b010, A2 = 3'b011, 
 r1 = 3'b100, r2 = 3'b101, nothing = 3'b110)
 
 (input clk, reset, hooked, unhooked, write_mode,
-input [1:0]mode_in, // required angle (mode_out)
+input [1:0]mode_in, // required angle
 output reg [1:0] mode_out, 
-output reg [2:0] action);
+output reg [2:0] action, 
+output reg [2:0] height);
 
 reg [3:0] state;
 reg [2:0] cnt;
-reg [2:0] height;
-reg return;
+reg return=0;
 
 parameter Res = 0, S1 = 1, S2 = 2, S3 = 3, S4 = 4, S5 = 5, S6 = 6, S7 = 7, S8 = 8, S9 = 9;
 
@@ -114,7 +114,7 @@ always @(posedge clk)
         cnt <= 3'd0;
 		  action <= nothing;
 		  mode_out <= 2'd0;
-		  height <= 3'd0;
+		  height <= start_height;
       end
 	 S1:
 	 begin
@@ -124,27 +124,27 @@ always @(posedge clk)
 			height <= start_height;
 	 end
     S2:
-      if (cnt == 3'd3) begin
+      if (cnt == turn_time) begin
         cnt <= 3'd0;
         mode_out <= mode_out + 2'd1;
       end
-      else begin
+      else if (mode_out != mode_in || return == 1'b1) begin
         cnt <= cnt + 3'd1;
       end
     S3:
-      if (cnt == 3'd3) begin
+      if (cnt == turn_time) begin
         cnt <= 3'd0;
         mode_out <= mode_out + 2'd1;
       end
-      else begin
+      else if (mode_out != mode_in || return == 1'b1) begin
         cnt <= cnt + 3'd1;
       end
     S4:
-      if (cnt == 3'd3) begin
+      if (cnt == turn_time) begin
         cnt <= 3'd0;
         mode_out <= mode_out + 2'd1;
       end
-      else begin
+      else if (mode_out != mode_in || return == 1'b1) begin
         cnt <= cnt + 3'd1;
       end
     S5:
