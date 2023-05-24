@@ -1,6 +1,6 @@
 module count_div2
-//#(parameter N=29,M=29'd25000000) // for mc
-#(parameter N=15, M=15'd25000) // for Quartus
+#(parameter N=29,M=29'd25000000) // for mc
+//#(parameter N=15, M=15'd25000) // for Quartus
 (input wire clk,
 output reg sync = 0);//, 
 //output wire [N-1:0]q);
