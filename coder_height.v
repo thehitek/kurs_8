@@ -16,5 +16,6 @@ case(data)
   3'b101: code = 7'b0010010;
   3'b110: code = 7'b0000010;
   3'b111: code = 7'b1111000;
+  default: code = 7'b1111111;
 endcase
 endmodule

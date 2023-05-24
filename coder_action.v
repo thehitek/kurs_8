@@ -51,6 +51,11 @@ case(data)
     code1 = 7'b1111111;
     code2 = 7'b1111111;
   end
+  default:
+  begin
+    code1 = 7'b1111111;
+    code2 = 7'b1111111;
+  end
 endcase
 end
 endmodule

@@ -1,11 +1,11 @@
 module main
 
 (input wire clk, reset, hooked, unhooked, write_mode,
-[1:0]mode_in,
+input wire [1:0]mode_in,
 output wire [6:0]out_mode, 
-[6:0] out1_action, 
-[6:0] out2_action, 
-[6:0] out_height);
+output wire [6:0] out1_action, 
+output wire [6:0] out2_action, 
+output wire [6:0] out_height);
 
 wire [1:0] mode;
 wire [2:0] action;

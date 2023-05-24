@@ -9,5 +9,6 @@ case(data)
   2'b01: code = 7'b1111001; // 1: 90
   2'b10: code = 7'b0100100; // 2: 180
   2'b11: code = 7'b0110000; // 3: -90
+  default: code = 7'b1111111;
 endcase
 endmodule

@@ -11,7 +11,7 @@ output reg [2:0] height);
 
 reg [3:0] state;
 reg [2:0] cnt;
-reg return=0;
+reg return_crane=0;
 
 parameter Res = 0, S1 = 1, S2 = 2, S3 = 3, S4 = 4, S5 = 5, S6 = 6, S7 = 7, S8 = 8, S9 = 9;
 
@@ -25,18 +25,18 @@ begin
       state <= S1;
     S1:
       begin
-	if (return) begin
-	  return <= 1'b0;
+	if (return_crane) begin
+	  return_crane <= 1'b0;
 	end
 	if (write_mode) begin
-			 return <= 1'b0;
+			 return_crane <= 1'b0;
           
           state <= S2;
 	     end
       end 
     S2:
       begin
-      if (!return) begin
+      if (!return_crane) begin
         if(cnt == turn_time)
           state <= S3;
         if (mode_out == mode_in) begin
@@ -52,7 +52,7 @@ begin
       end
     S3:
       begin
-      if (!return) begin
+      if (!return_crane) begin
         if(cnt == turn_time)
           state <= S4;
         if (mode_out == mode_in) begin
@@ -68,7 +68,7 @@ begin
       end
     S4:
       begin
-      if (!return) begin
+      if (!return_crane) begin
         if(cnt == turn_time || mode_out == mode_in) begin
           state <= S5;
         end
@@ -97,7 +97,7 @@ begin
       end
     S9:
       if (height == start_height) begin
-        return <= 1'b1;
+        return_crane <= 1'b1;
         state <= S2;
       end
     default:
@@ -118,7 +118,7 @@ always @(posedge clk)
       end
 	 S1:
 	 begin
-	 if (write_mode || return)
+	 if (write_mode || return_crane)
          action <= nothing;
 	 if (write_mode) 
 			height <= start_height;
@@ -128,7 +128,7 @@ always @(posedge clk)
         cnt <= 3'd0;
         mode_out <= mode_out + 2'd1;
       end
-      else if (mode_out != mode_in || return == 1'b1) begin
+      else if (mode_out != mode_in || return_crane == 1'b1) begin
         cnt <= cnt + 3'd1;
       end
     S3:
@@ -136,7 +136,7 @@ always @(posedge clk)
         cnt <= 3'd0;
         mode_out <= mode_out + 2'd1;
       end
-      else if (mode_out != mode_in || return == 1'b1) begin
+      else if (mode_out != mode_in || return_crane == 1'b1) begin
         cnt <= cnt + 3'd1;
       end
     S4:
@@ -144,7 +144,7 @@ always @(posedge clk)
         cnt <= 3'd0;
         mode_out <= mode_out + 2'd1;
       end
-      else if (mode_out != mode_in || return == 1'b1) begin
+      else if (mode_out != mode_in || return_crane == 1'b1) begin
         cnt <= cnt + 3'd1;
       end
     S5:
